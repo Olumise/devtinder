@@ -1,17 +1,11 @@
 const express = require("express");
 
 const app = express();
+const {userAuthenticated} = require('./middlewares/admin.js')
 
-app.get('/',(req,res) => {
-    res.send("This is the Homepage")
-})
 
-app.get('/about-us',(req,res) => {
-    res.send("This is the About Us Page")
-})
-
-app.get('/samples',(req,res) => {
-    res.send("This is the Samples Page")
+app.get('/admin/user',userAuthenticated,(req,res) => {
+res.send("User signed in successfully")
 })
 
 app.listen(3000, () => {
