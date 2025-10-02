@@ -4,19 +4,17 @@ const app = express();
 const {mongoDB} = require('./config/database')
 const User = require('./models/user')
 
+app.use(express.json())
+
 app.post('/signup',async (req,res) => {
-const user = new User({
-firstName : 'Babatunde',
-lastName : 'Adeoye',
-gender: 'Male',
-password: 'tolulope',
-age: 19,
-email: 'baba@gmail.com'
-})
+const user = new User(req.body)
 
 try {
     await user.save()
-    res.send('User saved successfully')
+    res.send({
+        "Message" : "User saved successfully",
+        "New User" : req.body
+     })
 } catch (err) {
 res.status(400).send("Error saving User: " + err.message);
 }
